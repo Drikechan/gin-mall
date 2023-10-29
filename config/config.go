@@ -9,7 +9,8 @@ import (
 var Config *Conf
 
 type System struct {
-	Port string `yaml:"port"`
+	Port        string `yaml:"port"`
+	UploadModel string `yaml:"uploadModel"`
 }
 
 type Mysql struct {
@@ -28,10 +29,15 @@ type Es struct {
 	EsIndex string `yaml:"esIndex"`
 }
 
+type Encrypt struct {
+	MoneyEncrypt string `yaml:"moneyEncrypt"`
+}
+
 type Conf struct {
-	System *System           `yaml:"system"`
-	Mysql  map[string]*Mysql `yaml:"mysql"`
-	Es     *Es               `yaml:"es"`
+	System  *System           `yaml:"system"`
+	Mysql   map[string]*Mysql `yaml:"mysql"`
+	Es      *Es               `yaml:"es"`
+	Encrypt *Encrypt          `yaml:"encrypt"`
 }
 
 func InitConfig() {

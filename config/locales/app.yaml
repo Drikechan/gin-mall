@@ -1,5 +1,6 @@
 system:
   Port: ":4001"
+  UploadModel: "local"
 
 mysql:
   default:
@@ -15,3 +16,6 @@ es:
   esHost: "127.0.0.1"
   esPort: "9200"
   esIndex: "mylog"
+
+encrypt:
+  moneyEncrypt: "MoneyEncrypt"

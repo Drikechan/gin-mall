@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/CocaineCong/eslogrus v1.0.2 // indirect
+	github.com/CocaineCong/secret v1.0.4 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/PuerkitoBio/purell v1.2.0 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect

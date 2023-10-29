@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -68,4 +69,9 @@ func InitMysql() {
 		fmt.Println("创建表失败")
 		return
 	}
+}
+
+func NewDBClient(ctx context.Context) *gorm.DB {
+	db := DB
+	return db.WithContext(ctx)
 }
