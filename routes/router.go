@@ -25,6 +25,7 @@ func NewRouter() *gin.Engine {
 
 	{
 		v1.POST("/user/register", api.UserRegisterHandler())
+		v1.POST("/user/login", api.UserLoginHandler())
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return r
