@@ -39,11 +39,21 @@ func UserRegisterHandler() gin.HandlerFunc {
 
 func UserLoginHandler() gin.HandlerFunc {
 	return func(context *gin.Context) {
-		var req *types.UserRegisterReq
+		var req types.UserRegisterReq
 		if err := context.ShouldBind(&req); err != nil {
 			log.LogrusObj.Infoln(err)
 			context.JSON(http.StatusBadRequest, ErrorResponse(context, err))
 			return
 		}
+
+		l := services.GetUserSrv()
+		resp, err := l.UserLogin(context.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Infoln(err)
+			context.JSON(http.StatusInternalServerError, ErrorResponse(context, err))
+			return
+		}
+		context.JSON(http.StatusOK, ctl.RespSuccess(context, resp))
+
 	}
 }
