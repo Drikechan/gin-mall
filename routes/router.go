@@ -27,6 +27,12 @@ func NewRouter() *gin.Engine {
 		v1.POST("/user/register", api.UserRegisterHandler())
 		v1.POST("/user/login", api.UserLoginHandler())
 		v1.GET("/product/list", api.ListProductsHandler())
+
+		authed := v1.Group("/")
+		authed.Use(middleware.AuthMiddleWare())
+		{
+			authed.POST("product/create", api.CreateProductHandler())
+		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return r

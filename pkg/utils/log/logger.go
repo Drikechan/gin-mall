@@ -68,7 +68,7 @@ func setOutputFile() (*os.File, error) {
 
 	src, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 		return nil, err
 	}
 	return src, err

@@ -14,4 +14,8 @@ const (
 const (
 	AccessTokenExpireDuration        = 24 * time.Hour
 	AccessRefreshTokenExpireDuration = 10 * 24 * time.Hour
+	HeaderForwardProto               = "X-Forward-Proto"
+	AssessTokenHeader                = "access_token"
+	RefreshTokenHeader               = "refresh_header"
+	MaxAge                           = 3600 * 24
 )

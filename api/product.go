@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"test-gin-mall/consts"
@@ -9,6 +10,23 @@ import (
 	"test-gin-mall/services"
 	"test-gin-mall/types"
 )
+
+func CreateProductHandler() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		var req types.CreateProductResp
+		if err := context.ShouldBind(&req); err != nil {
+			log.LogrusObj.Error(err)
+			context.JSON(http.StatusOK, ErrorResponse(context, err))
+			return
+		}
+
+		form, _ := context.MultipartForm()
+		files := form.File["images"]
+		fmt.Println(files)
+		//l := services.GetProductSrv()
+
+	}
+}
 
 func ListProductsHandler() gin.HandlerFunc {
 	return func(context *gin.Context) {

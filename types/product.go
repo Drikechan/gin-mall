@@ -5,6 +5,19 @@ type ProductListReq struct {
 	BasePageTypes
 }
 
+type CreateProductResp struct {
+	ID            uint   `form:"id" json:"id"`
+	Name          string `form:"name" json:"name"`
+	CategoryID    uint   `form:"category_id" json:"category_id"`
+	Title         string `form:"title" json:"title"`
+	Info          string `form:"info" json:"info"`
+	ImgPath       string `form:"img_path" json:"img_path"`
+	Price         string `form:"price" json:"price"`
+	DiscountPrice string `form:"discount_price" json:"discount_price"`
+	OnSale        bool   `form:"on_sale" json:"on_sale"`
+	Num           string `form:"num" json:"num"`
+}
+
 type ProductResp struct {
 	ID            uint   `json:"id"`
 	Name          string `json:"name"`
@@ -13,7 +26,7 @@ type ProductResp struct {
 	Info          string `json:"info"`
 	ImgPath       string `json:"imgPath"`
 	Price         string `json:"price"`
-	DiscountPrice string `json:"discountPrice"`
+	DiscountPrice string `json:"discount_price"`
 	View          uint64 `json:"view"`
 	CreateAt      int64  `json:"create_at"`
 	Num           int    `json:"num"`

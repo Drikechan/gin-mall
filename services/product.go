@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"mime/multipart"
 	"sync"
 	"test-gin-mall/pkg/utils/log"
 	"test-gin-mall/repository/db/dao"
@@ -20,6 +21,11 @@ func GetProductSrv() *ProductSrv {
 		ProductSrvIns = &ProductSrv{}
 	})
 	return ProductSrvIns
+}
+
+func (s *ProductSrv) ProductCreate(context context.Context, file *multipart.FileHeader, req *types.CreateProductResp) (resp interface{}, err error) {
+
+	return
 }
 
 func (s *ProductSrv) ListProduct(context context.Context, req *types.ProductListReq) (resp interface{}, err error) {
