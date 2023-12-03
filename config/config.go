@@ -33,11 +33,18 @@ type Encrypt struct {
 	MoneyEncrypt string `yaml:"moneyEncrypt"`
 }
 
+type PhotoPath struct {
+	PhotoHost  string `yaml:"PhotoHost"`
+	PhotoPath  string `yaml:"PhotoPath"`
+	AvatarPath string `yaml:"AvatarPath"`
+}
+
 type Conf struct {
-	System  *System           `yaml:"system"`
-	Mysql   map[string]*Mysql `yaml:"mysql"`
-	Es      *Es               `yaml:"es"`
-	Encrypt *Encrypt          `yaml:"encrypt"`
+	System    *System           `yaml:"system"`
+	Mysql     map[string]*Mysql `yaml:"mysql"`
+	Es        *Es               `yaml:"es"`
+	Encrypt   *Encrypt          `yaml:"encrypt"`
+	PhotoPath *PhotoPath        `yaml:"photoPath"`
 }
 
 func InitConfig() {

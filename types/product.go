@@ -15,7 +15,7 @@ type CreateProductResp struct {
 	Price         string `form:"price" json:"price"`
 	DiscountPrice string `form:"discount_price" json:"discount_price"`
 	OnSale        bool   `form:"on_sale" json:"on_sale"`
-	Num           string `form:"num" json:"num"`
+	Num           int    `form:"num" json:"num"`
 }
 
 type ProductResp struct {

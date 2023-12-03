@@ -19,3 +19,8 @@ es:
 
 encrypt:
   moneyEncrypt: "MoneyEncrypt"
+
+photoPath:
+  PhotoHost: "http://127.0.0.1"
+  ProductPath: "/static/images/product/"
+  AvatarPath: "/static/images/avatar/"

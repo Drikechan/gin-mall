@@ -23,8 +23,15 @@ func CreateProductHandler() gin.HandlerFunc {
 		form, _ := context.MultipartForm()
 		files := form.File["images"]
 		fmt.Println(files)
-		//l := services.GetProductSrv()
+		l := services.GetProductSrv()
 
+		resp, err := l.ProductCreate(context, files, &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			context.JSON(http.StatusOK, ErrorResponse(context, err))
+			return
+		}
+		context.JSON(http.StatusOK, ctl.RespSuccess(context, resp))
 	}
 }
 

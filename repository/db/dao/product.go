@@ -24,3 +24,7 @@ func (dao *ProductDao) CountProductsByCondition(condition map[string]interface{}
 	err = dao.DB.Model(&model.Product{}).Where(condition).Count(&total).Error
 	return
 }
+
+func (dao *ProductDao) CreateProduct(product *model.Product) error {
+	return dao.DB.Model(&model.Product{}).Create(&product).Error
+}

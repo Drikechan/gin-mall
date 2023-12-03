@@ -31,3 +31,8 @@ func (dao *UserDao) ExistOrNotByUserName(userName string) (user *model.User, exi
 func (dao *UserDao) CreateUser(user *model.User) error {
 	return dao.DB.Model(&model.User{}).Create(&user).Error
 }
+
+func (dao *UserDao) GetUserById(uId uint) (user *model.User, err error) {
+	err = dao.DB.Model(&model.User{}).Where("id=?", uId).First(&user).Error
+	return
+}

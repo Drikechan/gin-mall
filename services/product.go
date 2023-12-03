@@ -3,9 +3,15 @@ package services
 import (
 	"context"
 	"mime/multipart"
+	"strconv"
 	"sync"
+	conf "test-gin-mall/config"
+	"test-gin-mall/consts"
+	"test-gin-mall/pkg/utils/ctl"
 	"test-gin-mall/pkg/utils/log"
+	"test-gin-mall/pkg/utils/upload"
 	"test-gin-mall/repository/db/dao"
+	"test-gin-mall/repository/db/model"
 	"test-gin-mall/types"
 )
 
@@ -23,7 +29,78 @@ func GetProductSrv() *ProductSrv {
 	return ProductSrvIns
 }
 
-func (s *ProductSrv) ProductCreate(context context.Context, file *multipart.FileHeader, req *types.CreateProductResp) (resp interface{}, err error) {
+func (s *ProductSrv) ProductCreate(context context.Context, files []*multipart.FileHeader, req *types.CreateProductResp) (resp interface{}, err error) {
+	u, err := ctl.GetUserInfo(context)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return nil, err
+	}
+	uId := u.Id
+	boss, _ := dao.NewUserDao(context).GetUserById(uId)
+	tmp, _ := files[0].Open()
+	var path string
+	if conf.Config.System.UploadModel == consts.UploadModalLocal {
+		path, err = upload.ProductUploadToLocalStatic(tmp, uId, req.Name)
+	} else {
+		return
+	}
+
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+	product := &model.Product{
+		Name:          req.Name,
+		CategoryId:    req.CategoryID,
+		Title:         req.Title,
+		Info:          req.Info,
+		ImgPath:       path,
+		Price:         req.Price,
+		DiscountPrice: req.DiscountPrice,
+		Num:           req.Num,
+		OnSale:        true,
+		BossID:        uId,
+		BossName:      boss.UserName,
+		BossAvatar:    boss.Avatar,
+	}
+	productDao := dao.NewProductDao(context)
+	err = productDao.CreateProduct(product)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return nil, err
+	}
+
+	wg := new(sync.WaitGroup)
+	wg.Add(len(files))
+
+	for index, file := range files {
+		num := strconv.Itoa(index)
+		tmp, _ := file.Open()
+		if conf.Config.System.UploadModel == consts.UploadModalLocal {
+			path, err = upload.ProductUploadToLocalStatic(tmp, uId, req.Name+num)
+		}
+
+		if err != nil {
+			log.LogrusObj.Error(err)
+			return
+		}
+
+		productImg := &model.ProductImg{
+			ProductId: product.ID,
+			ImgPath:   path,
+		}
+
+		err = dao.NewProductImgDaoByDB(productDao.DB).CreateProductImg(productImg)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			return nil, err
+		}
+
+		wg.Done()
+
+	}
+
+	wg.Wait()
 
 	return
 }

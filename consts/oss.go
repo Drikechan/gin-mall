@@ -1,5 +1,6 @@
 package consts
 
 const (
-	UploadModalOss = "oss"
+	UploadModalOss   = "oss"
+	UploadModalLocal = "local"
 )
