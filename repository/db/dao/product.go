@@ -28,3 +28,7 @@ func (dao *ProductDao) CountProductsByCondition(condition map[string]interface{}
 func (dao *ProductDao) CreateProduct(product *model.Product) error {
 	return dao.DB.Model(&model.Product{}).Create(&product).Error
 }
+
+func (dao *ProductDao) UpdateProduct(pId uint, product *model.Product) error {
+	return dao.DB.Model(&model.Product{}).Where("id=?", pId).Updates(&product).Error
+}

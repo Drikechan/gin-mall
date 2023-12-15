@@ -57,3 +57,28 @@ func ListProductsHandler() gin.HandlerFunc {
 		context.JSON(http.StatusOK, ctl.RespSuccess(context, resp))
 	}
 }
+
+func UpdateProductHandler() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		var req types.UpdateProductResp
+		if err := context.ShouldBind(&req); err != nil {
+			log.LogrusObj.Error(err)
+			context.JSON(http.StatusOK, ErrorResponse(context, err))
+			return
+		}
+
+		l := services.GetProductSrv()
+		resp, err := l.ProductUpdate(context.Request.Context(), &req)
+		if err != nil {
+			log.LogrusObj.Error(err)
+			context.JSON(http.StatusOK, ErrorResponse(context, err))
+			return
+		}
+		context.JSON(http.StatusOK, ctl.RespSuccess(context, resp))
+	}
+}
+
+func DeleteProductHandler() gin.HandlerFunc {
+	return func(context *gin.Context) {
+	}
+}

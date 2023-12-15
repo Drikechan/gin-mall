@@ -31,7 +31,10 @@ func NewRouter() *gin.Engine {
 		authed := v1.Group("/")
 		authed.Use(middleware.AuthMiddleWare())
 		{
+			// 商品操作
 			authed.POST("product/create", api.CreateProductHandler())
+			authed.POST("product/update", api.UpdateProductHandler())
+			authed.POST("product/delete", api.UpdateProductHandler())
 		}
 	}
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

@@ -105,6 +105,24 @@ func (s *ProductSrv) ProductCreate(context context.Context, files []*multipart.F
 	return
 }
 
+func (s *ProductSrv) ProductUpdate(context context.Context, req *types.UpdateProductResp) (resp interface{}, err error) {
+	product := &model.Product{
+		Name:          req.Name,
+		CategoryId:    req.CategoryId,
+		Title:         req.Title,
+		Info:          req.Info,
+		Price:         req.Price,
+		DiscountPrice: req.DiscountPrice,
+		OnSale:        req.OnSale,
+	}
+	err = dao.NewProductDao(context).UpdateProduct(req.ID, product)
+	if err != nil {
+		log.LogrusObj.Error(err)
+		return
+	}
+	return
+}
+
 func (s *ProductSrv) ListProduct(context context.Context, req *types.ProductListReq) (resp interface{}, err error) {
 	var total int64
 	var condition = make(map[string]interface{})
